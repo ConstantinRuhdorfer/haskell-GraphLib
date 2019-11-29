@@ -1,4 +1,13 @@
-module Graph where
+module Graph
+    ( Graph
+    , mkGraph
+    , addVertex
+    , removeVertex
+    , addEdge
+    , removeEdge
+    , path
+    , connectedComponent
+    ) where
 
 import Debug.Trace
 
@@ -48,8 +57,20 @@ path' :: Graph -> Vertex -> Vertex -> Vertecies -> Vertecies -> Vertecies
 path' graph current goal visited open 
     | goal `elem` neighbours = reverse (goal:newVisited)
     | otherwise = path' graph (head newOpen) goal newVisited (tail newOpen)
-        where
-            newOpen = filter (\v -> not (elem v visited)) (neighbours ++ open)
-            newVisited = current:visited
-            neighbours = getNeighbours graph current
+  where
+    newOpen = filter (\v -> not (elem v visited)) (neighbours ++ open)
+    newVisited = current:visited
+    neighbours = getNeighbours graph current
+
+connectedComponent :: Graph -> Vertex -> Vertecies
+connectedComponent g@(Graph [] _) vertex = []
+connectedComponent graph startVertex = connectedComponent' graph startVertex [] [startVertex]
       
+connectedComponent' :: Graph -> Vertex -> Vertecies -> Vertecies -> Vertecies
+connectedComponent' graph current visited open
+    | open == [] = visited
+    | otherwise = connectedComponent' graph (head newOpen) newVisited newOpen
+  where
+    newOpen = filter (\v -> not (elem v newVisited)) (neighbours ++ open)
+    newVisited = current:visited
+    neighbours = getNeighbours graph current

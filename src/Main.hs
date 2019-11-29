@@ -15,7 +15,7 @@ e_2 = mkEdge v_2 v_3
 
 g_0 = mkGraph [v_0, v_1, v_2, v_3] [e_0, e_1, e_2]
 
-result = path g_0 v_0 v_3
+result = connectedComponent g_0 v_0
 
 main :: IO ()
 main = print result
