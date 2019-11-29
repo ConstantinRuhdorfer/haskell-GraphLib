@@ -46,10 +46,14 @@ getNeighbours g@(Graph _ edges) vertex
     = map (\e -> getOtherVertex e vertex) 
           (filter (\e -> occursInEdge e vertex) edges)
 
-depthFirstSearch :: Graph -> Vertex -> (Vertecies -> Bool) -> Vertecies -> Vertecies -> Vertecies
-depthFirstSearch graph current stopCond visited open
+depthFirstSearch :: Graph -> Vertex -> (Vertecies -> Bool) -> Vertecies
+depthFirstSearch graph start stopCond 
+    = depthFirstSearch' graph start stopCond [] [start]
+
+depthFirstSearch' :: Graph -> Vertex -> (Vertecies -> Bool) -> Vertecies -> Vertecies -> Vertecies
+depthFirstSearch' graph current stopCond visited open
     | stopCond open = visited
-    | otherwise = depthFirstSearch graph (head newOpen) stopCond newVisited newOpen
+    | otherwise = depthFirstSearch' graph (head newOpen) stopCond newVisited newOpen
   where
     newOpen = filter (\v -> not (elem v newVisited)) (neighbours ++ open)
     newVisited = current:visited
@@ -61,11 +65,12 @@ path graph start goal
     | start == goal = [goal]
     | otherwise = result
   where
-    result = goal:(depthFirstSearch graph start (\open -> goal `elem` open) [] [start])
+    result = goal:(depthFirstSearch graph start (\open -> goal `elem` open))
 
 connectedComponent :: Graph -> Vertex -> Vertecies
 connectedComponent g@(Graph [] _) vertex = []
-connectedComponent graph startVertex = depthFirstSearch graph startVertex (\open -> open == []) [] [startVertex]
+connectedComponent graph startVertex 
+    = depthFirstSearch graph startVertex (\open -> open == [])
 
 connectedComponents :: Graph -> [Vertecies]
 connectedComponents g@(Graph [] []) = [[]]
