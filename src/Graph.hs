@@ -40,15 +40,16 @@ getNeighbours g@(Graph _ edges) vertex
 
 path :: Graph -> Vertex -> Vertex -> Vertecies
 path g@(Graph vertecies []) start goal = []
-path g@(Graph vertecies edges) start goal 
+path graph start goal 
     | start == goal = [goal]
-    | otherwise = (path' g start goal [] [])
+    | otherwise = path' graph start goal [] []
 
 path' :: Graph -> Vertex -> Vertex -> Vertecies -> Vertecies -> Vertecies
-path' g@(Graph vertecies edges) current goal visited open 
-    | goal `elem` (getNeighbours g current) = reverse (goal:newVisited)
-    | otherwise = (path' g (head newOpen) goal newVisited (tail newOpen))
-        where 
-            newOpen = filter (\v -> not (elem v visited)) ((getNeighbours g current) ++ open)
+path' graph current goal visited open 
+    | goal `elem` neighbours = reverse (goal:newVisited)
+    | otherwise = path' graph (head newOpen) goal newVisited (tail newOpen)
+        where
+            newOpen = filter (\v -> not (elem v visited)) (neighbours ++ open)
             newVisited = current:visited
+            neighbours = getNeighbours graph current
       
