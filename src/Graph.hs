@@ -7,9 +7,8 @@ module Graph
     , removeEdge
     , path
     , connectedComponent
+    , connectedComponents
     ) where
-
-import Debug.Trace
 
 import Vertex
 import Edge
@@ -74,3 +73,11 @@ connectedComponent' graph current visited open
     newOpen = filter (\v -> not (elem v newVisited)) (neighbours ++ open)
     newVisited = current:visited
     neighbours = getNeighbours graph current
+
+connectedComponents :: Graph -> [Vertecies]
+connectedComponents g@(Graph [] []) = [[]]
+connectedComponents g@(Graph vertecies []) = map (\v -> [v]) vertecies
+connectedComponents g@(Graph vertecies edges) 
+    = foldl (\list vertex -> if not(vertex `elem` (concat list)) then (connectedComponent g vertex):list else list) 
+        [] 
+        vertecies
