@@ -22,16 +22,15 @@ mkEdge :: Vertex -> Vertex -> Edge
 mkEdge vertexA vertexB = Edge vertexA vertexB
 
 getOtherVertex :: Edge -> Vertex -> Vertex
-getOtherVertex edge vertex | vertex == vertexA edge = vertexB edge
-                           | otherwise = vertexA edge
+getOtherVertex e@(Edge a b) vertex 
+    | vertex == a = b
+    | otherwise = a
 
 getVertexA :: Edge -> Vertex
-getVertexA edge = vertexA edge
+getVertexA = vertexA
 
 getVertexB :: Edge -> Vertex
-getVertexB edge = vertexB edge
+getVertexB = vertexB
 
 occursInEdge :: Edge -> Vertex -> Bool
-occursInEdge edge vertex | vertex == vertexA edge = True
-                         | vertex == vertexB edge = True
-                         | otherwise = False
+occursInEdge e@(Edge a b) vertex = vertex == a || vertex == b
