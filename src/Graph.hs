@@ -23,26 +23,26 @@ mkGraph :: Vertecies -> Edges -> Graph
 mkGraph vertecies edges = Graph vertecies edges
 
 addVertex :: Graph -> Vertex -> Graph
-addVertex g@(Graph vertecies edges) vertex = mkGraph (vertex:vertecies) edges
+addVertex (Graph vertecies edges) vertex = mkGraph (vertex:vertecies) edges
 
 removeVertex :: Graph -> Vertex -> Graph
-removeVertex g@(Graph [] edges) vertex = mkGraph [] edges
-removeVertex g@(Graph vertecies edges) vertex 
+removeVertex (Graph [] edges) _ = mkGraph [] edges
+removeVertex (Graph vertecies edges) vertex 
     = mkGraph (filter (\v -> v /= vertex) vertecies) 
               (filter (\e -> (getVertexA e) /= vertex 
                 && (getVertexB e) /= vertex) edges)
 
 addEdge :: Graph -> Edge -> Graph
-addEdge g@(Graph vertecies edges) edge = mkGraph vertecies (edge:edges)
+addEdge (Graph vertecies edges) edge = mkGraph vertecies (edge:edges)
 
 removeEdge :: Graph -> Edge -> Graph
-removeEdge g@(Graph vertecies []) edge = mkGraph vertecies []
-removeEdge g@(Graph vertecies edges) edge 
+removeEdge (Graph vertecies []) _ = mkGraph vertecies []
+removeEdge (Graph vertecies edges) edge 
     = mkGraph vertecies (filter (\e -> e /= edge) edges)
 
 getNeighbours :: Graph -> Vertex -> Vertecies
-getNeighbours g@(Graph _ []) vertex = []
-getNeighbours g@(Graph _ edges) vertex 
+getNeighbours (Graph _ []) _ = []
+getNeighbours (Graph _ edges) vertex 
     = map (\e -> getOtherVertex e vertex) 
           (filter (\e -> occursInEdge e vertex) edges)
 
@@ -60,19 +60,19 @@ depthFirstSearch' graph current stopCond visited open
     neighbours = getNeighbours graph current
 
 path :: Graph -> Vertex -> Vertex -> Vertecies
-path g@(Graph vertecies []) start goal = []
+path (Graph _ []) _ _ = []
 path graph start goal 
     | start == goal = [goal]
     | otherwise = reverse (goal:(depthFirstSearch graph start (\open -> goal `elem` open)))
 
 connectedComponent :: Graph -> Vertex -> Vertecies
-connectedComponent g@(Graph [] _) vertex = []
+connectedComponent (Graph [] _) _ = []
 connectedComponent graph startVertex 
     = depthFirstSearch graph startVertex (\open -> open == [])
 
 connectedComponents :: Graph -> [Vertecies]
-connectedComponents g@(Graph [] []) = [[]]
-connectedComponents g@(Graph vertecies []) = map (\v -> [v]) vertecies
+connectedComponents (Graph [] []) = [[]]
+connectedComponents (Graph vertecies []) = map (\v -> [v]) vertecies
 connectedComponents g@(Graph vertecies _) 
     = foldl 
         (\list vertex -> 

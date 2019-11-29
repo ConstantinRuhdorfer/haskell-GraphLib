@@ -13,16 +13,18 @@ import Vertex
 data Edge = Edge 
     { vertexA :: Vertex
     , vertexB :: Vertex
-    } deriving (Eq, Show)
+    } deriving (Eq)
 
 type Edges = [Edge]
 
+instance Show Edge where
+    show (Edge vertexA vertexB) = "e(" ++ show(vertexA) ++ " > " ++ show(vertexB) ++ ")"
 
 mkEdge :: Vertex -> Vertex -> Edge
 mkEdge vertexA vertexB = Edge vertexA vertexB
 
 getOtherVertex :: Edge -> Vertex -> Vertex
-getOtherVertex e@(Edge a b) vertex 
+getOtherVertex (Edge a b) vertex 
     | vertex == a = b
     | otherwise = a
 
@@ -33,4 +35,4 @@ getVertexB :: Edge -> Vertex
 getVertexB = vertexB
 
 occursInEdge :: Edge -> Vertex -> Bool
-occursInEdge e@(Edge a b) vertex = vertex == a || vertex == b
+occursInEdge (Edge a b) vertex = vertex == a || vertex == b

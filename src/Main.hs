@@ -4,19 +4,41 @@ import Graph
 import Vertex
 import Edge
 
-v_0 = mkVertex 0
-v_1 = mkVertex 1
-v_2 = mkVertex 2
-v_3 = mkVertex 3
-v_4 = mkVertex 4
-
-e_0 = mkEdge v_0 v_1
-e_1 = mkEdge v_1 v_2
-e_2 = mkEdge v_2 v_3
-
-g_0 = mkGraph [v_0, v_1, v_2, v_3, v_4] [e_0, e_1, e_2]
-
-result = path g_0 v_0 v_1
+import System.IO
 
 main :: IO ()
-main = print result
+main  = do  
+    let list = []
+    handle <- openFile "input/graph1.plain" ReadMode
+    contents <- hGetContents handle
+    let singlewords = words contents
+        list = f singlewords
+    
+    let graphVertecies = parseInputVertecies (head list) []
+    let graphEdges = parseInputEdges (tail list) []
+
+    let g = mkGraph graphVertecies graphEdges
+
+    let res = connectedComponents g
+
+    print res
+
+    hClose handle
+
+parseInputEdges :: [Int] -> Edges -> Edges
+parseInputEdges list result
+    | list == [] = result
+    | otherwise = parseInputEdges (tail (tail list)) (partSolution:result) 
+  where
+    vertexA = mkVertex (head list)
+    vertexB = mkVertex (head (tail list))
+    partSolution = mkEdge vertexA vertexB
+
+parseInputVertecies :: Int -> Vertecies -> Vertecies
+parseInputVertecies numVertecies result
+    | numVertecies == 0 = result
+    | otherwise = parseInputVertecies (numVertecies-1) ((mkVertex (numVertecies-1)):result)
+
+
+f :: [String] -> [Int]
+f = map read

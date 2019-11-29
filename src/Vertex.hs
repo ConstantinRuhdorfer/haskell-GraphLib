@@ -9,13 +9,17 @@ type VertexId = Int
 
 data Vertex = Vertex 
     { vertexId :: VertexId
-    } deriving (Eq, Show)  
+    } deriving (Eq)  
 
 type Vertecies = [Vertex]
 
+instance Show Vertex where
+    show (Vertex _id) = "v_" ++ show(_id)
+
 mkVertex :: VertexId -> Vertex
-mkVertex id 
-    | id >= 0 = Vertex id
+mkVertex newId 
+    | newId >= 0 = Vertex newId
+    | otherwise = error "Should not be negative"
 
 getVertexId :: Vertex -> VertexId
 getVertexId = vertexId
