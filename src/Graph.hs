@@ -63,9 +63,7 @@ path :: Graph -> Vertex -> Vertex -> Vertecies
 path g@(Graph vertecies []) start goal = []
 path graph start goal 
     | start == goal = [goal]
-    | otherwise = result
-  where
-    result = goal:(depthFirstSearch graph start (\open -> goal `elem` open))
+    | otherwise = reverse (goal:(depthFirstSearch graph start (\open -> goal `elem` open)))
 
 connectedComponent :: Graph -> Vertex -> Vertecies
 connectedComponent g@(Graph [] _) vertex = []
