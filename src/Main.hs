@@ -9,8 +9,6 @@ import System.Environment
 
 main :: IO ()
 main  = do
-    let list = []
-
     args <- getArgs
     case args of
         [] ->    print "Please give atleast one command line argument like: ... input/graph1.plain"
@@ -23,6 +21,7 @@ main  = do
 -}
 handleFilePath :: String -> IO ()
 handleFilePath path = do
+    let list = []
     handle <- openFile path ReadMode
     contents <- hGetContents handle
     let singlewords = words contents
