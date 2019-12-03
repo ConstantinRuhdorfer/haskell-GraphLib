@@ -4,14 +4,14 @@ Warning you need git-lfs!!
 
 On Mac (with brew):
 
-```
+```sh
 brew install git-lfs
 git lfs install
 ```
 
 18.04 Ubuntu:
 
-```
+```sh
 sudo apt-get install git-lfs
 git lfs install
 ```
