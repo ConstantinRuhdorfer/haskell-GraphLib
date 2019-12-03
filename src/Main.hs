@@ -5,13 +5,25 @@ import Parser
 import Vertex
 
 import System.IO
+import System.Environment
 
 main :: IO ()
-main  = do  
+main  = do
     let list = []
-    -- Could be any of the files in input/*
-    -- Notice: Some of the files are *big*
-    handle <- openFile "input/graph1.plain" ReadMode
+
+    args <- getArgs
+    case args of
+        [] ->    print "Please give atleast one command line argument like: ... input/graph1.plain"
+        [arg] -> handleFilePath arg 
+        _ ->     error "too many arguments just 1 supported."
+
+{-|
+  The 'handleFilePath' function gets a file path and does something with it.
+  Put your code here:
+-}
+handleFilePath :: String -> IO ()
+handleFilePath path = do
+    handle <- openFile path ReadMode
     contents <- hGetContents handle
     let singlewords = words contents
         list = strToInt singlewords
@@ -21,11 +33,10 @@ main  = do
 
     let g = mkGraph graphVertecies graphEdges
 
-    -- Searches for all connected components
+    -- At this point you have obtained a graph; Do something with it!
+    -- Calcs connected components:
     let res = connectedComponents g
 
-    let path0to6 = path g (mkVertex 0) (mkVertex 5)
-
-    print path0to6
+    print res
 
     hClose handle
