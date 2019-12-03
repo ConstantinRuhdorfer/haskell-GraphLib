@@ -61,7 +61,7 @@ stack exec haskell-GraphLib path/to/project/input/graph1.plain
 
 ## Input file format
 
-The input file need to look like this:
+The input file needs to look like this:
 
 ```sh
 9      Number of vertecies on the first line: Will create vertex 0 .. 8
