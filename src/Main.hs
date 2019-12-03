@@ -1,44 +1,31 @@
 module Main where
 
 import Graph
+import Parser
 import Vertex
-import Edge
 
 import System.IO
 
 main :: IO ()
 main  = do  
     let list = []
+    -- Could be any of the files in input/*
+    -- Notice: Some of the files are *big*
     handle <- openFile "input/graph1.plain" ReadMode
     contents <- hGetContents handle
     let singlewords = words contents
-        list = f singlewords
+        list = strToInt singlewords
     
-    let graphVertecies = parseInputVertecies (head list) []
-    let graphEdges = parseInputEdges (tail list) []
+    let graphVertecies = parseInputVertecies (head list)
+    let graphEdges = parseInputEdges (tail list)
 
     let g = mkGraph graphVertecies graphEdges
 
+    -- Searches for all connected components
     let res = connectedComponents g
 
-    print res
+    let path0to6 = path g (mkVertex 0) (mkVertex 5)
+
+    print path0to6
 
     hClose handle
-
-parseInputEdges :: [Int] -> Edges -> Edges
-parseInputEdges list result
-    | list == [] = result
-    | otherwise = parseInputEdges (tail (tail list)) (partSolution:result) 
-  where
-    vertexA = mkVertex (head list)
-    vertexB = mkVertex (head (tail list))
-    partSolution = mkEdge vertexA vertexB
-
-parseInputVertecies :: Int -> Vertecies -> Vertecies
-parseInputVertecies numVertecies result
-    | numVertecies == 0 = result
-    | otherwise = parseInputVertecies (numVertecies-1) ((mkVertex (numVertecies-1)):result)
-
-
-f :: [String] -> [Int]
-f = map read
