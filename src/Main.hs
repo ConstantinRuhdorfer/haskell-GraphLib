@@ -33,6 +33,7 @@ handleFilePath path = do
     let g = mkGraph graphVertecies graphEdges
 
     -- At this point you have obtained a graph; Do something with it!
+    -- Have a look at Graph.hs for algorithms
     -- Calcs connected components:
     let res = connectedComponents g
 
