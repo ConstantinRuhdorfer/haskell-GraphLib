@@ -22,7 +22,7 @@ The relevant folders are:
 
 ## Usage
 
-A basic project setup looks like this:
+A basic project setup looks like this (assumes the haskell-stack toolchain):
 
 ```sh
 git clone git@github.com:ConstantinRuhdorfer/haskell-GraphLib.git
