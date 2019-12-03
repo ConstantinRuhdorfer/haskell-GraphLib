@@ -1,5 +1,7 @@
 # haskell-GraphLib
 
+Warning you need git-lfs!!
+
 A small graph lib written in Haskell.
 
 This is modeld after https://github.com/DanielWochnik/CombOptWS2018.
