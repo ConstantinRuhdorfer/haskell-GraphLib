@@ -2,6 +2,20 @@
 
 Warning you need git-lfs!!
 
+On Mac (with brew):
+
+```
+brew install git-lfs
+git lfs install
+```
+
+18.04 Ubuntu:
+
+```
+sudo apt-get install git-lfs
+git lfs install
+```
+
 A small graph lib written in Haskell.
 
 This is modeld after https://github.com/DanielWochnik/CombOptWS2018.
