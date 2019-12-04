@@ -27,13 +27,21 @@ The relevant folders are:
 
 ```
 .
-+-- src/                  Src files are here
++-- app/                  Entry point
+|   +-- Main.hs
++-- input/                Some sample input files are here
++-- src/                  Library files are here
 |   +-- Edge.hs
 |   +-- Graph.hs
-|   +-- Main.hs
 |   +-- Parser.hs
 |   +-- Vertex.hs
-+-- input/                Some sample input files are here
++-- tst/                  Tests
+|   +-- unit/
+|       +-- EdgeSpec.hs
+|       +-- GraphSpec.hs
+|       +-- ParserSpec.hs
+|       +-- Spec.hs
+|       +-- VertexSpec.hs
 ```
 
 ## Usage
@@ -58,6 +66,12 @@ or (but really the same):
 ```sh
 stack build
 stack exec haskell-GraphLib some/path/to/problem/File
+```
+
+Tests are run by:
+
+```sh
+stack test
 ```
 
 ## Command-Line arguments
