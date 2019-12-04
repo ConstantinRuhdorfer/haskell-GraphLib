@@ -13,9 +13,23 @@ cabal-version:       >=1.10
 extra-source-files:  README.md
 
 executable haskell-GraphLib
-  hs-source-dirs:      src
+  hs-source-dirs:      app
   main-is:             Main.hs
   default-language:    Haskell2010
-  build-depends:       
-    base >= 4.7 && < 5
-  other-modules:       Vertex Edge Graph Parser
+  build-depends:       base >= 4.7 && < 5, haskell-GraphLib
+
+library
+  exposed-modules:     Vertex, Edge, Graph, Parser
+  build-depends:       base >= 4.7 && < 5
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+
+test-suite unit-tests
+  type:                exitcode-stdio-1.0
+  main-is:             Spec.hs
+  hs-source-dirs:      tst/unit
+  other-modules:       EdgeSpec, GraphSpec, ParserSpec, VertexSpec
+  build-depends:       base
+                       , haskell-GraphLib
+                       , hspec
+                       , hspec-discover

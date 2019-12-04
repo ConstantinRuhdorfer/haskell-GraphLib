@@ -3,8 +3,11 @@ module Graph
     , mkGraph
     , addVertex
     , removeVertex
+    , getVertecies
     , addEdge
     , removeEdge
+    , getEdges
+    , getNeighbours
     , path
     , connectedComponents
     ) where
@@ -18,7 +21,7 @@ import Edge
 data Graph = Graph 
     { vertecies :: Vertecies
     , edges :: Edges
-    } deriving (Show)
+    } deriving (Eq, Show)
 
 {-|
   Constructor for a Graph.
@@ -103,6 +106,9 @@ removeVertex (Graph vertecies edges) vertex
                 (filter (\e -> (getVertexA e) /= vertex 
                 && (getVertexB e) /= vertex) edges)
 
+getVertecies :: Graph -> Vertecies
+getVertecies = vertecies
+
 addEdge :: Graph -> Edge -> Graph
 addEdge (Graph vertecies edges) edge = mkGraph vertecies (edge:edges)
 
@@ -110,3 +116,6 @@ removeEdge :: Graph -> Edge -> Graph
 removeEdge (Graph vertecies []) _ = mkGraph vertecies []
 removeEdge (Graph vertecies edges) edge 
     = mkGraph vertecies (filter (\e -> e /= edge) edges)
+
+getEdges :: Graph -> Edges
+getEdges = edges
