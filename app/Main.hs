@@ -37,6 +37,14 @@ handleFilePath path = do
     -- Calcs connected components:
     let res = connectedComponents g
 
+    let edges = getEdges g
+    let vertecies = getVertecies g
+
+    print "Edges: "
+    print edges
+    print "Vertecies: "
+    print vertecies
+    print "Connected compononents:"
     print res
 
     hClose handle
