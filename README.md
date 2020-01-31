@@ -55,6 +55,7 @@ stack install
 ./build.sh
 ```
 
+The haskell-stack toolchain can be found [here](https://docs.haskellstack.org/en/stable/README/). 
 After that you can compile and run the programm with:
 
 ```sh
